@@ -20,10 +20,9 @@ app.use(cors({credentials: true})); // Allows cross-origin requests and cookies/
 app.get('/', (req, res) => {
     res.send('API Working');
 })
-app.use('/api/auth', authRouter)
-app.use('/api/user', userRouter)
+app.use('/api/auth', authRouter) // handles auth endpoints
+app.use('/api/user', userRouter) // handles user-related endpoints
 
-// 1:54:00
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 })
