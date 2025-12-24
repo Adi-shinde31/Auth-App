@@ -187,7 +187,12 @@ export const sendVerifyOTP = async (req, res) => {
 
 // verify the email using otp
 export const verifyEmail = async (req, res) => {
-    const userId = req.userId; // from JWT
+    console.log("🟣 Verify Email API HIT");
+    console.log("🟣 Headers:", req.headers);
+    console.log("🟣 Cookies:", req.cookies);
+    console.log("🟣 req.userId:", req.userId);
+
+    const userId = req.userId;
     const { otp } = req.body;
 
     if(!userId || !otp){

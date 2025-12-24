@@ -11,6 +11,7 @@ function NavBar () {
     const sendVerificationOTP = async () => {
         console.log("🔵 Clicked Verify Email");
         try{
+            console.log("🟡 Before API call");
             axios.defaults.withCredentials = true;
             const { data } = await axios.post(backendURL + '/api/auth/send-verify-otp', { withCredentials: true });
             console.log("🟢 OTP API response:", data);
@@ -23,6 +24,8 @@ function NavBar () {
                 toast.error(data.message);    
             }
         } catch (e) {
+            console.error("🔴 Verify Email Error:", err);
+            console.error("🔴 Error response:", err?.response?.data);
             console.log("❌ OTP API error:", e);
             toast.error(e.message);
         }
