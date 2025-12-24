@@ -6,9 +6,11 @@ import Login from './pages/Login.jsx'
 import EmailVerify from './pages/EmailVerify'
 import ResetPassword from './pages/ResetPassword'
 import { ToastContainer } from 'react-toastify';
+import { useLocation } from "react-router-dom";
 
 function App() {
-
+  const location = useLocation();
+  console.log("📍 Current route:", location.pathname);
   return (
     <>
       <ToastContainer />
