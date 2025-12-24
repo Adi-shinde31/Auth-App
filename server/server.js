@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 
 connectDB();
 
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = ['https://adityashinde-auth-app.onrender.com']
 
 app.use(express.json()); // Parses JSON data from request bodies (req.body)
 app.use(cookieParser()); // Reads cookies from incoming requests (req.cookies)
