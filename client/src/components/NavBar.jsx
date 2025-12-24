@@ -13,7 +13,7 @@ function NavBar () {
         try{
             console.log("🟡 Before API call");
             axios.defaults.withCredentials = true;
-            const { data } = await axios.post(backendURL + '/api/auth/send-verify-otp', { withCredentials: true });
+            const { data } = await axios.post(backendURL + '/api/auth/send-verify-otp', {}, { withCredentials: true });
             console.log("🟢 OTP API response:", data);
             if(data.success){
                 console.log("🟡 Navigating to /email-verify");
