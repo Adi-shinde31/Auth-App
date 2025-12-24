@@ -52,9 +52,19 @@ function EmailVerify () {
         }
     }
 
+    // auth guard
     useEffect(() => {
-        isLoggedIn && userData && userData.isAccountVerified && navigate('/');
-    }, [isLoggedIn, userData])
+    if (!isLoggedIn) {
+        navigate('/login');
+    }
+    }, [isLoggedIn]);
+
+    // redirect after verification
+    useEffect(() => {
+    if (userData?.isAccountVerified) {
+        navigate('/');
+    }
+    }, [userData]);
     return (
         <>
         {/* Navbar */}

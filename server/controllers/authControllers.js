@@ -141,6 +141,7 @@ export const logout = async (req, res) => {
 
 //send verification OTP
 export const sendVerifyOTP = async (req, res) => {
+    console.log("sendVerifyOTP userId:", req.userId);
     try{
         const userId = req.userId;
         const user = await userModel.findById(userId);
