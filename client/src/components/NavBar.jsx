@@ -13,7 +13,10 @@ function NavBar () {
         try{
             console.log("🟡 Before API call");
             axios.defaults.withCredentials = true;
-            const { data } = await axios.post(backendURL + '/api/auth/send-verify-otp', {}, { withCredentials: true });
+            const { data } = await axios.post(backendURL + '/api/auth/send-verify-otp', {}, {
+                withCredentials: true,
+                headers: { 'Content-Type': 'application/json' }
+            });
             console.log("🟢 OTP API response:", data);
             if(data.success){
                 console.log("🟡 Navigating to /email-verify");
@@ -24,8 +27,8 @@ function NavBar () {
                 toast.error(data.message);    
             }
         } catch (e) {
-            console.error("🔴 Verify Email Error:", err);
-            console.error("🔴 Error response:", err?.response?.data);
+            console.error("🔴 Verify Email Error:", e);
+            console.error("🔴 Error response:", e?.response?.data);
             console.log("❌ OTP API error:", e);
             toast.error(e.message);
         }

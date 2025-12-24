@@ -12,11 +12,23 @@ const port = process.env.PORT || 3000;
 
 connectDB();
 
-const allowedOrigins = ['https://adityashinde-auth-app.onrender.com']
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://adityashinde-auth-app.onrender.com'
+];
 
 app.use(express.json()); // Parses JSON data from request bodies (req.body)
 app.use(cookieParser()); // Reads cookies from incoming requests (req.cookies)
-app.use(cors({origin: allowedOrigins, credentials: true})); // Allows cross-origin requests and cookies/auth headers from frontend
+app.use(cors({
+  origin: function(origin, callback) {
+    if(!origin || allowedOrigins.includes(origin)){
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
 
 // API Endpoints
 app.get('/', (req, res) => {
