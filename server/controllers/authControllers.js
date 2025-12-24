@@ -44,8 +44,8 @@ export const register = async (req, res) => {
         const mailOptions = {
             from: process.env.SENDER_EMAIL,
             to: email,
-            subject: 'Congratulations! You just created your account.',
-            text: `Welcome ${name} bhava!, Thank you register kelya baddal!`
+            subject: 'Congratulations! You just created your account on Auth App.',
+            text: `Welcome ${name}! \n\nThank you for registering on Auth App.`
         }
 
         try {
