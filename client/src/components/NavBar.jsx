@@ -51,18 +51,18 @@ function NavBar () {
             {/* Dropdown */}
             <div className="absolute right-0 top-full w-44 bg-white rounded-lg shadow-lg border opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-150">
                 <ul className="py-2 text-sm text-gray-700">
-                {!userData.isAccountVerified && (
-                    <li onClick={sendVerificationOTP} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
-                    Verify Email
-                    </li>
-                )}
+                    {!userData.isAccountVerified && (
+                        <li onClick={sendVerificationOTP} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+                        Verify Email
+                        </li>
+                    )}
 
-                <li
-                    onClick={logout}
-                    className="px-4 py-2 hover:bg-red-50 text-red-600 cursor-pointer"
-                >
-                    Logout
-                </li>
+                    <li
+                        onClick={logout}
+                        className="px-4 py-2 hover:bg-red-50 text-red-600 cursor-pointer"
+                    >
+                        Logout
+                    </li>
                 </ul>
             </div>
             </div>

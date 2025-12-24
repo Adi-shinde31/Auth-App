@@ -9,6 +9,7 @@ export const AppContextProvider = (props) => {
     axios.defaults.withCredentials = true;
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
+    console.log("Verify URL:", backendURL);
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
     const [ userData, setUserData ] = useState(null);
 
@@ -33,7 +34,7 @@ export const AppContextProvider = (props) => {
 
     const getUserData = async () => {
         try{
-            const {data} = await axios.get(backendURL + '/api/user/data');
+            const {data} = await axios.get(backendURL + '/api/user/data', { withCredentials: true });
             data.success ? setUserData(data.userData) : toast.error(data.message); 
         } catch (e) {   
             toast.error(e.message); 

@@ -100,7 +100,7 @@ function Login() {
 
           <button
             type="submit"
-            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition"
+            className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-800 transition cursor-pointer"
           >
             {state}
           </button>
