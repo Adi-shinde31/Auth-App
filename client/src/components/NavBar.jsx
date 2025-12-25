@@ -13,6 +13,8 @@ function NavBar () {
         try{
             console.log("🟡 Before API call");
             axios.defaults.withCredentials = true;
+            console.log("🧪 Final URL:", backendURL + '/api/auth/send-verify-otp');
+
             const promise = axios.post(
                     backendURL + '/api/auth/send-verify-otp',
                     {},
