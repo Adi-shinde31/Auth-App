@@ -10,7 +10,7 @@ import { authRouter } from './routes/authRoutes.js';
 import { userRouter } from './routes/userRoutes.js';
 
 const app = express();
-app.set('trust proxy', 1); // Required for secure cookies behind proxies (Render.com)
+app.set('trust proxy', 1);
 
 const port = process.env.PORT || 3000;
 
@@ -27,10 +27,8 @@ const allowedOrigins = [
 app.use(express.json());
 app.use(cookieParser());
 
-// CORS configuration
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like Postman or server-to-server)
+app.use(cors({
+  origin: function(origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -39,12 +37,8 @@ const corsOptions = {
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-app.use(cors(corsOptions));
-
-// Handle preflight requests for all routes
-app.options('*', cors(corsOptions));
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // Routes
 app.get('/', (req, res) => {
