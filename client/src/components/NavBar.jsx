@@ -12,7 +12,6 @@ function NavBar () {
         console.log("🔵 Clicked Verify Email");
         try{
             console.log("🟡 Before API call");
-            axios.defaults.withCredentials = true;
             console.log("🧪 Final URL:", backendURL + '/api/auth/send-verify-otp');
 
             const promise = axios.post(

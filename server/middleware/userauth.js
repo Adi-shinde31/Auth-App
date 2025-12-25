@@ -1,37 +1,31 @@
 import jwt from 'jsonwebtoken';
 
-const userAuth = async (req, res, next) => {
-    const { token } = req.cookies;
-    console.log("🟢 Auth Middleware HIT");
-    console.log("🟢 Token:", token);
-    if(!token){
+const userAuth = (req, res, next) => {
+
+    // 🔥 ALLOW PREFLIGHT REQUESTS
+    if (req.method === 'OPTIONS') {
+        return next();
+    }
+
+    const token = req.cookies?.token;
+
+    if (!token) {
         return res.status(401).json({
             success: false,
-            message: 'Not Authorized! Login Again.'
-        })
+            message: 'Unauthorized'
+        });
     }
 
-    try{
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-        if(decodedToken.id){
-            req.userId = decodedToken.id;
-            next();
-        }
-        else{
-            return res.status(401).json({
-                success: false,
-                message: 'Not Authorized! Login Again.'
-            })
-        }
-
-    } catch (error) {
-        res.json({
-            success : false,
-            message : error.message 
-        })
-        
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.userId = decoded.id;
+        next();
+    } catch (err) {
+        return res.status(401).json({
+            success: false,
+            message: 'Invalid token'
+        });
     }
-}
+};
 
 export default userAuth;
