@@ -13,11 +13,15 @@ function NavBar () {
         try{
             console.log("🟡 Before API call");
             axios.defaults.withCredentials = true;
-            const { data } = await axios.post(backendURL + '/api/auth/send-verify-otp', {}, {
-                withCredentials: true,
-                headers: { 'Content-Type': 'application/json' }
-            });
-            console.log("🟢 OTP API response:", data);
+            const promise = axios.post(
+                    backendURL + '/api/auth/send-verify-otp',
+                    {},
+                    { withCredentials: true }
+                );
+            console.log("🧪 Axios promise created:", promise);
+            const { data } = await promise;
+            console.log("🧪 Axios promise created data :", data);
+            console.log("🧪 Axios promise created data success:", data.success);
             if(data.success){
                 console.log("🟡 Navigating to /email-verify");
                 navigate('/email-verify');
