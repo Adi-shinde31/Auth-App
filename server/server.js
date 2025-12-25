@@ -8,6 +8,7 @@ import { authRouter } from './routes/authRoutes.js'
 import { userRouter } from './routes/userRoutes.js'
 
 const app = express();
+app.set('trust proxy', 1);
 const port = process.env.PORT || 3000;
 
 connectDB();
@@ -24,10 +25,11 @@ app.use(cors({
     'http://localhost:5173',
     'https://adityashinde-auth-app.onrender.com'
   ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  credentials: true
 }));
+
+app.options('*', cors());
+
 
 
 // API Endpoints
