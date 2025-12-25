@@ -51,7 +51,10 @@ export const register = async (req, res) => {
         try {
             await transporter.sendMail(mailOptions);
         } catch (mailError) {
-            console.log('Email error:', mailError.message);
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to send reset OTP'
+            });
         }  
 
 
@@ -141,11 +144,12 @@ export const logout = async (req, res) => {
 
 //send verification OTP
 export const sendVerifyOTP = async (req, res) => {
+    console.log("sendVerifyOTP userId req:", req);
     console.log("sendVerifyOTP userId:", req.userId);
     try{
         const userId = req.userId;
         const user = await userModel.findById(userId);
-
+        console.log('user: ', user);
         if(user.isAccountVerified){
             return res.json({
                 success : false,
@@ -175,6 +179,10 @@ export const sendVerifyOTP = async (req, res) => {
             })
         } catch (mailError) {
             console.log('Email error:', mailError.message);
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to send verification email'
+            });
         } 
 
     } catch (error) {
@@ -302,8 +310,11 @@ export const sendResetOTP = async (req, res) => {
                 message : 'Reset OTP Sent!'
             })
         } catch (mailError) {
-            console.log('Email error:', mailError.message);
-        } 
+            return res.status(500).json({
+                success: false,
+                message: 'Failed to send reset OTP'
+            });
+        }
 
     } catch (error) {
         return res.json({
