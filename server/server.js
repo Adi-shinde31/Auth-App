@@ -20,15 +20,15 @@ const allowedOrigins = [
 app.use(express.json()); // Parses JSON data from request bodies (req.body)
 app.use(cookieParser()); // Reads cookies from incoming requests (req.cookies)
 app.use(cors({
-  origin: function(origin, callback) {
-    if(!origin || allowedOrigins.includes(origin)){
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true
+  origin: [
+    'http://localhost:5173',
+    'https://adityashinde-auth-app.onrender.com'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
 
 // API Endpoints
 app.get('/', (req, res) => {
