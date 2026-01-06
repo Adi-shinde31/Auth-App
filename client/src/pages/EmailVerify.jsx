@@ -5,7 +5,6 @@ import { useRef, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function EmailVerify () {
-    console.log("📘 EmailVerify component MOUNTED");
     const inputRefs = useRef([]);
     const { backendURL, isLoggedIn, userData, getUserData } = useContext(AppContent);
     const navigate = useNavigate();
@@ -55,22 +54,14 @@ function EmailVerify () {
 
     // auth guard
     useEffect(() => {
-    console.log("🧠 useEffect1 fired in EmailVerify");
-    console.log("1isLoggedIn:", isLoggedIn);
-    console.log("1userData:", userData);
     if (!isLoggedIn) {
-        console.log("🚨 Redirecting to home1 because already verified");
         navigate('/login');
     }
     }, [isLoggedIn]);
 
     // redirect after verification
     useEffect(() => {
-        console.log("🧠 useEffect2 fired in EmailVerify");
-        console.log("2isLoggedIn:", isLoggedIn);
-        console.log("2userData:", userData);
     if (userData?.isAccountVerified) {
-        console.log("🚨 Redirecting to home2 because already verified");
         navigate('/');
     }
     }, [userData]);

@@ -10,7 +10,6 @@ import { useLocation } from "react-router-dom";
 
 function App() {
   const location = useLocation();
-  console.log("📍 Current route:", location.pathname);
   return (
     <>
       <ToastContainer />

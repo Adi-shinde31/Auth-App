@@ -14,9 +14,6 @@ app.set('trust proxy', 1);
 
 const port = process.env.PORT || 3000;
 
-// Connect to MongoDB
-connectDB();
-
 // Allowed frontend origins
 const allowedOrigins = [
   'http://localhost:5173',
@@ -47,7 +44,10 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/user', userRouter);
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Connect to MongoDB & Start server
+connectDB()
+.then(() => {
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+})

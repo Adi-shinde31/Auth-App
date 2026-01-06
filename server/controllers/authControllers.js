@@ -144,12 +144,9 @@ export const logout = async (req, res) => {
 
 //send verification OTP
 export const sendVerifyOTP = async (req, res) => {
-    console.log("sendVerifyOTP userId req:", req);
-    console.log("sendVerifyOTP userId:", req.userId);
     try{
         const userId = req.userId;
         const user = await userModel.findById(userId);
-        console.log('user: ', user);
         if(user.isAccountVerified){
             return res.json({
                 success : false,
@@ -173,14 +170,12 @@ export const sendVerifyOTP = async (req, res) => {
 
         try {
             const info = await transporter.sendMail(mailOptions);
-            console.log("✅ Verification email sent:", info.response);
 
             return res.json({
                 success : true,
                 message : 'Verification OTP Sent!'
             })
         } catch (mailError) {
-            console.log('Email error:', mailError.message);
             return res.status(500).json({
                 success: false,
                 message: 'Failed to send verification email'
@@ -198,10 +193,6 @@ export const sendVerifyOTP = async (req, res) => {
 
 // verify the email using otp
 export const verifyEmail = async (req, res) => {
-    console.log("🟣 Verify Email API HIT");
-    console.log("🟣 Headers:", req.headers);
-    console.log("🟣 Cookies:", req.cookies);
-    console.log("🟣 req.userId:", req.userId);
 
     const userId = req.userId;
     const { otp } = req.body;

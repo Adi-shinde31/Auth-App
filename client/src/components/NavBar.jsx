@@ -9,32 +9,23 @@ function NavBar () {
     const { userData, backendURL, setIsLoggedIn, setUserData } = useContext(AppContent);
 
     const sendVerificationOTP = async () => {
-        console.log("🔵 Clicked Verify Email");
         try{
-            console.log("🟡 Before API call");
-            console.log("🧪 Final URL:", backendURL + '/api/auth/send-verify-otp');
 
             const promise = axios.post(
                     backendURL + '/api/auth/send-verify-otp',
                     {},
                     { withCredentials: true }
                 );
-            console.log("🧪 Axios promise created:", promise);
             const { data } = await promise;
-            console.log("🧪 Axios promise created data :", data);
-            console.log("🧪 Axios promise created data success:", data.success);
             if(data.success){
-                console.log("🟡 Navigating to /email-verify");
                 navigate('/email-verify');
                 toast.success(data.message);
             } else{
-                console.log("🔴 OTP API failed");
                 toast.error(data.message);    
             }
         } catch (e) {
             console.error("🔴 Verify Email Error:", e);
             console.error("🔴 Error response:", e?.response?.data);
-            console.log("❌ OTP API error:", e);
             toast.error(e.message);
         }
     }

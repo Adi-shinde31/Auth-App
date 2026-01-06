@@ -7,7 +7,6 @@ export const AppContent = createContext();
 export const AppContextProvider = (props) => {
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
-    console.log("Verify URL:", backendURL);
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
     const [ userData, setUserData ] = useState(null);
 
