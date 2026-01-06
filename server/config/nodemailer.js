@@ -20,5 +20,7 @@ transporter.verify((err, success) => {
     console.log("✅ Nodemailer ready to send emails");
   }
 });
+console.log("EMAIL_USER:", process.env.SENDER_EMAIL ? "SET" : "NOT SET");
+console.log("EMAIL_PASS:", process.env.SENDER_PASSWORD ? "SET" : "NOT SET");
 
 export default transporter;
