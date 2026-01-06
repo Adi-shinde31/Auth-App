@@ -146,7 +146,9 @@ export const logout = async (req, res) => {
 export const sendVerifyOTP = async (req, res) => {
     try{
         const userId = req.userId;
+        console.log("userId: ",userId);
         const user = await userModel.findById(userId);
+        console.log("user: ", user);
         if(user.isAccountVerified){
             return res.json({
                 success : false,
@@ -155,6 +157,8 @@ export const sendVerifyOTP = async (req, res) => {
         }
 
         const otp = String(Math.floor(100000 + Math.random() * 900000));
+        console.log("otp ",otp);
+
         user.verifyOTP = otp;
         user.verifyOTPExpiresAt = Date.now() + 24 * 60 * 60 * 1000;
 
@@ -168,8 +172,11 @@ export const sendVerifyOTP = async (req, res) => {
             \n\nThis OTP expires in ${new Date(user.verifyOTPExpiresAt)}`
         }
 
+        console.log("mailOptions: ", mailOptions);
         try {
+            console.log("inside try");
             const info = await transporter.sendMail(mailOptions);
+            console.log('info', info);
 
             return res.json({
                 success : true,
@@ -195,8 +202,9 @@ export const sendVerifyOTP = async (req, res) => {
 export const verifyEmail = async (req, res) => {
 
     const userId = req.userId;
+    console.log("userId:",userId);
     const { otp } = req.body;
-
+    console.log("otp ", otp);
     if(!userId || !otp){
         return res.json({
             success : false,
@@ -205,8 +213,9 @@ export const verifyEmail = async (req, res) => {
     }
 
     try{
+        console.log('inside try');
         const user = await userModel.findById(userId);
-
+        console.log('user ', user);
         if(!user){
             return res.json({
                 success : false,
