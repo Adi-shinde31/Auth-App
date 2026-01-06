@@ -16,8 +16,8 @@ const port = process.env.PORT || 3000;
 
 // Allowed frontend origins
 const allowedOrigins = [
-  'http://localhost:5173'
-  // 'https://adityashinde-auth-app.onrender.com'
+  'http://localhost:5173',
+  'https://adityashinde-auth-app.onrender.com'
 ];
 
 // Middleware
