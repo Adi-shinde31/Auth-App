@@ -7,18 +7,14 @@ import axios from 'axios';
 function NavBar () {
     const navigate = useNavigate();
     const { userData, backendURL, setIsLoggedIn, setUserData } = useContext(AppContent);
-    console.log('hru');
     const sendVerificationOTP = async () => {
         try{
-            console.log('inside try');
             const promise = axios.post(
                     backendURL + '/api/auth/send-verify-otp',
                     {},
                     { withCredentials: true }
                 );
-            console.log(promise);
             const { data } = await promise;
-            console.log(data);
             if(data.success){
                 navigate('/email-verify');
                 toast.success(data.message);
@@ -26,8 +22,7 @@ function NavBar () {
                 toast.error(data.message);    
             }
         } catch (e) {
-            console.error("🔴 Verify Email Error:", e);
-            console.error("🔴 Error response:", e?.response?.data);
+            console.error("Error response:", e?.response?.data);
             toast.error(e.message);
         }
     }

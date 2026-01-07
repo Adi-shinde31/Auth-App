@@ -2,14 +2,12 @@ import nodemailer from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 const transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
-  port: 465,
-  secure: true, // false for TLS
+  host: 'smtp-relay.brevo.com',
+  port: 587,
   auth: {
-    user: process.env.SENDER_EMAIL,
-    pass: process.env.SENDER_PASSWORD
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASSWORD
   },
-  connectionTimeout: 10000,
 });
 
 // Verify transporter on startup
@@ -20,7 +18,5 @@ transporter.verify((err, success) => {
     console.log("✅ Nodemailer ready to send emails");
   }
 });
-console.log("EMAIL_USER:", process.env.SENDER_EMAIL ? "SET" : "NOT SET");
-console.log("EMAIL_PASS:", process.env.SENDER_PASSWORD ? "SET" : "NOT SET");
 
 export default transporter;

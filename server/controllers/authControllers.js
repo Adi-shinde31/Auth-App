@@ -26,7 +26,6 @@ export const register = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const user = new userModel({ name, email, password: hashedPassword });
-
         await user.save();
 
         // generating web tokens
@@ -49,7 +48,7 @@ export const register = async (req, res) => {
         }
 
         try {
-            await transporter.sendMail(mailOptions);
+            const res = await transporter.sendMail(mailOptions);
         } catch (mailError) {
             return res.status(500).json({
                 success: false,
@@ -146,9 +145,7 @@ export const logout = async (req, res) => {
 export const sendVerifyOTP = async (req, res) => {
     try{
         const userId = req.userId;
-        console.log("userId: ",userId);
         const user = await userModel.findById(userId);
-        console.log("user: ", user);
         if(user.isAccountVerified){
             return res.json({
                 success : false,
@@ -157,7 +154,6 @@ export const sendVerifyOTP = async (req, res) => {
         }
 
         const otp = String(Math.floor(100000 + Math.random() * 900000));
-        console.log("otp ",otp);
 
         user.verifyOTP = otp;
         user.verifyOTPExpiresAt = Date.now() + 24 * 60 * 60 * 1000;
@@ -172,11 +168,8 @@ export const sendVerifyOTP = async (req, res) => {
             \n\nThis OTP expires in ${new Date(user.verifyOTPExpiresAt)}`
         }
 
-        console.log("mailOptions: ", mailOptions);
         try {
-            console.log("inside try");
             const info = await transporter.sendMail(mailOptions);
-            console.log('info', info);
 
             return res.json({
                 success : true,
@@ -190,7 +183,6 @@ export const sendVerifyOTP = async (req, res) => {
         } 
 
     } catch (error) {
-        console.error("❌ sendVerifyOTP error:", error);
         return res.json({
             success : false,
             message : error.message 
@@ -202,9 +194,7 @@ export const sendVerifyOTP = async (req, res) => {
 export const verifyEmail = async (req, res) => {
 
     const userId = req.userId;
-    console.log("userId:",userId);
     const { otp } = req.body;
-    console.log("otp ", otp);
     if(!userId || !otp){
         return res.json({
             success : false,
@@ -213,9 +203,7 @@ export const verifyEmail = async (req, res) => {
     }
 
     try{
-        console.log('inside try');
         const user = await userModel.findById(userId);
-        console.log('user ', user);
         if(!user){
             return res.json({
                 success : false,
