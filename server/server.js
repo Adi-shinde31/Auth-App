@@ -15,10 +15,7 @@ app.set('trust proxy', 1);
 const port = process.env.PORT || 3000;
 
 // Allowed frontend origins
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://adityashinde-auth-app.onrender.com'
-];
+const allowedOrigin = process.env.ALLOWED_ORIGIN;
 
 // Middleware
 app.use(express.json());
@@ -26,12 +23,14 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+      if (!origin) return callback(null, true);
+
+      if (origin === allowedOrigin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
