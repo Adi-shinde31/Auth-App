@@ -1,17 +1,19 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
+
+let isConnected = false;
 
 const connectDB = async () => {
-  try {
-    await mongoose.connect(`${process.env.MONGODB_URI}/mern-auth`);
-    console.log('Database Connected!');
-  } catch (err) {
-    console.error('DB Connection Error:', err.message);
-    process.exit(1);
+  if (isConnected) {
+    return;
   }
-
-  mongoose.connection.on('disconnected', () => {
-    console.log('Database Disconnected');
-  });
+  try {
+    const db = await mongoose.connect(`${process.env.MONGODB_URI}/mern-auth`);
+    isConnected = db.connections[0].readyState;
+    console.log('MongoDB Connected');
+  } catch (error) {
+    console.error('MongoDB connection failed:', error);
+    throw error;
+  }
 };
 
 export default connectDB;
